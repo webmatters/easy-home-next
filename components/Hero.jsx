@@ -1,7 +1,7 @@
 export default function Hero() {
   return (
     <div className="bg-white pb-8 sm:pb-12 lg:pb-12">
-      <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-48">
+      <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-24">
         <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
           <div>
             <div>
@@ -57,7 +57,7 @@ export default function Hero() {
                   </button>
                 </div>
               </form>
-              <p className="mt-3 text-sm text-gray-500">
+              <p className="m-3 text-sm text-gray-500">
                 We care about the protection of your data. Read our{' '}
                 <a href="#" className="font-medium text-gray-900 underline">
                   Privacy Policy
