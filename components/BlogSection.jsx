@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const posts = [
   {
     title: 'Seasonal Lawn Care',
@@ -127,6 +129,13 @@ export default function BlogSection() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="mt-6 text-center">
+          <Link href="/blog">
+            <a className="text-lg font-semibold text-blue-600 hover:text-blue-500">
+              More Articles
+            </a>
+          </Link>
         </div>
       </div>
     </div>

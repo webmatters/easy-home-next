@@ -1,16 +1,11 @@
+import Link from 'next/link';
+
 export default function Hero() {
   return (
     <div className="bg-white pb-8 sm:pb-12 lg:pb-12">
       <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-24">
         <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
           <div>
-            <div>
-              <img
-                className="h-11 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-mark.svg?color=blue&shade=500"
-                alt="Workflow"
-              />
-            </div>
             <div className="mt-20">
               <div className="mt-6 sm:max-w-xl">
                 <h1>
@@ -20,7 +15,7 @@ export default function Hero() {
                   <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
                     <span className="block text-blue-600">Easy Home</span>
                     <span className="block text-gray-900">
-                      Home Care Packages
+                      One Price, All Done
                     </span>
                   </span>
                 </h1>
@@ -59,9 +54,11 @@ export default function Hero() {
               </form>
               <p className="m-3 text-sm text-gray-500">
                 We care about the protection of your data. Read our{' '}
-                <a href="#" className="font-medium text-gray-900 underline">
-                  Privacy Policy
-                </a>
+                <Link href="privacy">
+                  <a className="font-medium text-gray-900 underline">
+                    Privacy Policy
+                  </a>
+                </Link>
                 .
               </p>
             </div>
