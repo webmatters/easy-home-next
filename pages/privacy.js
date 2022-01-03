@@ -226,5 +226,5 @@ export default function Privacy() {
         website: http://www.easyhome.so/contact
       </main>
     </>
-  );
+  )
 }

@@ -6,7 +6,7 @@ import {
   CreditCardIcon,
   CalendarIcon,
   HomeIcon,
-} from '@heroicons/react/outline';
+} from '@heroicons/react/outline'
 
 const features = [
   {
@@ -39,7 +39,7 @@ const features = [
     icon: CurrencyDollarIcon,
     text: 'Despite the added convenience and quality, our rates are comparable to small providers.',
   },
-];
+]
 
 export default function Features() {
   return (
@@ -83,5 +83,5 @@ export default function Features() {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,6 +1,16 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
-export default function Hero() {
+import BasicError from './shared/BasicError'
+import BasicAlert from './shared/BasicAlert'
+
+export default function Hero({ addEmail, error, alertMessage }) {
+  const submitEmail = async event => {
+    event.preventDefault()
+    const email = event.target.email.value
+    addEmail(email)
+    event.target.reset()
+  }
+
   return (
     <div className="bg-white pb-8 sm:pb-12 lg:pb-12">
       <div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-24">
@@ -31,16 +41,22 @@ export default function Hero() {
                   Enter your email below to be notified when we launch.
                 </p>
               </div>
-              <form action="#" className="mt-12 sm:max-w-lg sm:w-full sm:flex">
+              <form
+                className="mt-12 mb-3 sm:max-w-lg sm:w-full sm:flex"
+                onSubmit={submitEmail}
+              >
                 <div className="min-w-0 flex-1">
-                  <label htmlFor="hero-email" className="sr-only">
+                  <label htmlFor="email" className="sr-only">
                     Email address
                   </label>
                   <input
-                    id="hero-email"
+                    id="email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     className="block w-full border border-gray-300 rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     placeholder="Enter your email"
+                    required
                   />
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-3">
@@ -52,9 +68,11 @@ export default function Hero() {
                   </button>
                 </div>
               </form>
+              {error && <BasicError message={error} />}
+              {alertMessage && <BasicAlert message={alertMessage} />}
               <p className="m-3 text-sm text-gray-500">
                 We care about the protection of your data. Read our{' '}
-                <Link href="privacy">
+                <Link href="/privacy">
                   <a className="font-medium text-gray-900 underline">
                     Privacy Policy
                   </a>
@@ -74,5 +92,5 @@ export default function Hero() {
         </div>
       </div>
     </div>
-  );
+  )
 }

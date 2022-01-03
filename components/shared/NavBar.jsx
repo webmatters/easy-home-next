@@ -1,6 +1,6 @@
-import { Fragment } from 'react';
-import Link from 'next/link';
-import { Popover, Transition } from '@headlessui/react';
+import { Fragment } from 'react'
+import Link from 'next/link'
+import { Popover, Transition } from '@headlessui/react'
 import {
   BookmarkAltIcon,
   CalendarIcon,
@@ -14,8 +14,8 @@ import {
   SupportIcon,
   ViewGridIcon,
   XIcon,
-} from '@heroicons/react/outline';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+} from '@heroicons/react/outline'
+import { ChevronDownIcon } from '@heroicons/react/solid'
 
 const features = [
   {
@@ -50,11 +50,11 @@ const features = [
       'Build strategic funnels that will drive your customers to convert',
     icon: RefreshIcon,
   },
-];
+]
 const callsToAction = [
   { name: 'Watch Demo', href: '#', icon: PlayIcon },
   { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-];
+]
 const resources = [
   {
     name: 'Help Center',
@@ -83,7 +83,7 @@ const resources = [
     href: '#',
     icon: ShieldCheckIcon,
   },
-];
+]
 const recentPosts = [
   { id: 1, name: 'Boost your conversion rate', href: '#' },
   {
@@ -92,10 +92,10 @@ const recentPosts = [
     href: '#',
   },
   { id: 3, name: 'Improve your customer experience', href: '#' },
-];
+]
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(' ')
 }
 
 export default function NavBar() {
@@ -418,5 +418,5 @@ export default function NavBar() {
         </Popover.Panel>
       </Transition> */}
     </Popover>
-  );
+  )
 }

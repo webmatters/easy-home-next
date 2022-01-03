@@ -1,4 +1,4 @@
-import { CheckIcon } from '@heroicons/react/outline';
+import { CheckIcon } from '@heroicons/react/outline'
 
 const features = [
   {
@@ -33,7 +33,7 @@ const features = [
     name: 'Windows',
     description: 'Seasonal window cleaning, outdoors and indoors.',
   },
-];
+]
 
 export default function ServiceList() {
   return (
@@ -67,5 +67,5 @@ export default function ServiceList() {
         </dl>
       </div>
     </div>
-  );
+  )
 }
