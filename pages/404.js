@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import Layout from '../components/shared/Layout'
+import Layout from '@/components/shared/Layout'
 
 export default function NotFoundPage() {
   return (

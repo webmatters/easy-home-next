@@ -1,11 +1,11 @@
-import Layout from '../components/shared/Layout'
+import Layout from '@/components/shared/Layout'
 import { useState } from 'react'
 import axios from 'axios'
 
-import Hero from '../components/Hero'
-import Features from '../components/Features'
-import ServiceList from '../components/ ServiceList'
-import BlogSection from '../components/BlogSection'
+import Hero from '@/components/Hero'
+import Features from '@/components/Features'
+import ServiceList from '@/components/ ServiceList'
+import BlogSection from '@/components/BlogSection'
 
 export default function Home() {
   const [error, setError] = useState('')
