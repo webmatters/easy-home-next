@@ -1,3 +1,4 @@
+import Layout from '../components/shared/Layout'
 import { useState } from 'react'
 import axios from 'axios'
 
@@ -33,11 +34,11 @@ export default function Home() {
   }
 
   return (
-    <>
+    <Layout>
       <Hero addEmail={addEmail} error={error} alertMessage={alertMessage} />
       <Features />
       <ServiceList />
       <BlogSection />
-    </>
+    </Layout>
   )
 }

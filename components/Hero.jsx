@@ -25,17 +25,17 @@ export default function Hero({ addEmail, error, alertMessage }) {
                   <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
                     <span className="block text-blue-600">Easy Home</span>
                     <span className="block text-gray-900">
-                      One Price, All Done
+                      Home Care Simplified
                     </span>
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                  Ever wish you could just sign up and pay one monthly fee to
-                  have all of your home maintenance chores handled for you. With
-                  Easy Home you'll be able to. Just select the package of
-                  services you want, how often you want them done, and we'll
-                  take care of the rest. Combine services like lawn care, house
-                  cleaning, grocery shopping, pet care, and more.
+                  Ever wish you could have all of your home maintenance chores
+                  handled with one simple subscription? With Easy Home you'll be
+                  able to set it and forget it. Imagine never having to worry
+                  about mowing the lawn, scrubbing the toilets, or cleaning out
+                  gutters again. Just select the package of services you want,
+                  how often you want them done, and we'll take care of the rest.
                 </p>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                   Enter your email below to be notified when we launch.

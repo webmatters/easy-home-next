@@ -1,6 +1,8 @@
+import Layout from '../components/shared/Layout'
+
 export default function Privacy() {
   return (
-    <>
+    <Layout title="Privacy Policy">
       <main>
         <h1>Privacy Policy</h1>
         <p>Last updated: December 26, 2021</p>
@@ -225,6 +227,6 @@ export default function Privacy() {
         Privacy Policy, You can contact us: By visiting this page on our
         website: http://www.easyhome.so/contact
       </main>
-    </>
+    </Layout>
   )
 }
