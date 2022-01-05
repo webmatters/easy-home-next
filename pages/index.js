@@ -15,7 +15,7 @@ export default function Home() {
     if (email) {
       try {
         const result = await axios.post(
-          'http://localhost:1337/api/contacts-marketings',
+          `${process.env.API_URL}/contacts-marketings`,
           {
             data: { email },
           }
