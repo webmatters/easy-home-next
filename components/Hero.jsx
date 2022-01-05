@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import BasicError from './shared/BasicError'
 import BasicAlert from './shared/BasicAlert'
+import heroPic from '../public/images/house-blue-hero.jpg'
 
 export default function Hero({ addEmail, error, alertMessage }) {
   const submitEmail = async event => {
@@ -84,10 +86,11 @@ export default function Hero({ addEmail, error, alertMessage }) {
         </div>
 
         <div className="relative w-full h-64 sm:h-72 md:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 lg:h-full">
-          <img
+          <Image
             className="absolute inset-0 w-full h-full object-cover"
-            src="https://images.unsplash.com/photo-1549517045-bc93de075e53?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
-            alt=""
+            src={heroPic}
+            layout="fill"
+            alt="Picture of a house"
           />
         </div>
       </div>

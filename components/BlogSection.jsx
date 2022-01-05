@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
+
+import andrewPic from '../public/images/selfie.jpg'
 
 const posts = [
   {
@@ -15,7 +18,7 @@ const posts = [
     author: {
       name: 'Andrew Smith',
       href: '#',
-      imageUrl: '/selfie.jpg',
+      imageUrl: andrewPic,
     },
   },
   {
@@ -80,10 +83,12 @@ export default function BlogSection() {
               className="flex flex-col rounded-lg shadow-lg overflow-hidden"
             >
               <div className="flex-shrink-0">
-                <img
+                <Image
                   className="h-48 w-full object-cover"
                   src={post.imageUrl}
-                  alt=""
+                  alt="post.title"
+                  width={414}
+                  height={192}
                 />
               </div>
               <div className="flex-1 bg-white p-6 flex flex-col justify-between">
@@ -106,10 +111,12 @@ export default function BlogSection() {
                   <div className="flex-shrink-0">
                     <a href={post.author.href}>
                       <span className="sr-only">{post.author.name}</span>
-                      <img
+                      <Image
                         className="h-10 w-10 rounded-full"
                         src={post.author.imageUrl}
-                        alt=""
+                        alt={post.author.name}
+                        width={40}
+                        height={40}
                       />
                     </a>
                   </div>
