@@ -6,6 +6,7 @@ import Hero from '@/components/Hero'
 import Features from '@/components/Features'
 import ServiceList from '@/components/ ServiceList'
 import BlogSection from '@/components/BlogSection'
+import ContactForm from '@/components/ContactForm'
 
 export default function Home() {
   const [error, setError] = useState('')
@@ -15,7 +16,7 @@ export default function Home() {
     if (email) {
       try {
         const result = await axios.post(
-          `${process.env.API_URL}/contacts-marketings`,
+          `${process.env.NEXT_PUBLIC_API_URL}/notify-emails`,
           {
             data: { email },
           }
@@ -24,10 +25,13 @@ export default function Home() {
         await setTimeout(() => setAlertMessage(''), 3000)
       } catch (err) {
         if (
-          err.response.data.error.message === 'This attribute must be unique'
+          err?.response?.data?.error?.message ===
+          'This attribute must be unique'
         ) {
           setError('This email is already set to be notified.')
           await setTimeout(() => setError(''), 3000)
+        } else {
+          console.error(err)
         }
       }
     }
@@ -38,7 +42,8 @@ export default function Home() {
       <Hero addEmail={addEmail} error={error} alertMessage={alertMessage} />
       <Features />
       <ServiceList />
-      <BlogSection />
+      {/* <BlogSection /> */}
+      <ContactForm />
     </Layout>
   )
 }

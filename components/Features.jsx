@@ -37,13 +37,13 @@ const features = [
   {
     name: 'Reasonable Rates',
     icon: CurrencyDollarIcon,
-    text: 'Despite the added convenience and quality, our rates are comparable to small providers.',
+    text: 'Despite the added convenience and quality, our rates are competitive with other providers.',
   },
 ]
 
 export default function Features() {
   return (
-    <div className="relative bg-white py-16 sm:py-24 lg:py-32">
+    <div className="relative bg-gray-50 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
         <h2 className="text-base font-semibold tracking-wider text-blue-600 uppercase">
           Live Easy
@@ -59,7 +59,7 @@ export default function Features() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {features.map(feature => (
               <div key={feature.name} className="pt-6">
-                <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+                <div className="flow-root bg-white shadow-lg rounded-lg px-6 pb-8">
                   <div className="-mt-6">
                     <div>
                       <span className="inline-flex items-center justify-center p-3 bg-blue-500 rounded-md shadow-lg">
