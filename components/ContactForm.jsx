@@ -1,14 +1,32 @@
+import { useState } from 'react'
 import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
 
 export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
+  })
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    console.log('Form Submitted', formData)
+  }
+
+  const handleInputChange = event => {
+    const { name, value } = event.target
+    setFormData({ ...formData, [name]: value })
+  }
+
   return (
     <div className="bg-gray-50">
       <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
         <div className="relative bg-white shadow-xl">
           <h2 className="sr-only">Contact us</h2>
-
           <div className="grid grid-cols-1 lg:grid-cols-3">
-            {/* Contact information */}
             <div className="relative overflow-hidden py-10 px-6 bg-blue-700 sm:px-10 xl:p-12">
               <div
                 className="absolute inset-0 pointer-events-none sm:hidden"
@@ -206,13 +224,12 @@ export default function ContactForm() {
                 Send us a message
               </h3>
               <form
-                action="#"
-                method="POST"
+                onSubmit={handleSubmit}
                 className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
               >
                 <div>
                   <label
-                    htmlFor="first-name"
+                    htmlFor="firstName"
                     className="block text-sm font-medium text-gray-900"
                   >
                     First name
@@ -220,16 +237,17 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="given-name"
+                      name="firstName"
+                      id="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
                 </div>
                 <div>
                   <label
-                    htmlFor="last-name"
+                    htmlFor="lastName"
                     className="block text-sm font-medium text-gray-900"
                   >
                     Last name
@@ -237,9 +255,10 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
+                      name="lastName"
+                      id="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
@@ -256,7 +275,8 @@ export default function ContactForm() {
                       id="email"
                       name="email"
                       type="email"
-                      autoComplete="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
@@ -269,7 +289,7 @@ export default function ContactForm() {
                     >
                       Phone
                     </label>
-                    <span id="phone-optional" className="text-sm text-gray-500">
+                    <span id="phoneOptional" className="text-sm text-gray-500">
                       Optional
                     </span>
                   </div>
@@ -278,9 +298,10 @@ export default function ContactForm() {
                       type="text"
                       name="phone"
                       id="phone"
-                      autoComplete="tel"
+                      value={formData.phone}
+                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
-                      aria-describedby="phone-optional"
+                      aria-describedby="phoneOptional"
                     />
                   </div>
                 </div>
@@ -296,6 +317,8 @@ export default function ContactForm() {
                       type="text"
                       name="subject"
                       id="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
@@ -308,7 +331,7 @@ export default function ContactForm() {
                     >
                       Message
                     </label>
-                    <span id="message-max" className="text-sm text-gray-500">
+                    <span id="messageMax" className="text-sm text-gray-500">
                       Max. 500 characters
                     </span>
                   </div>
@@ -317,9 +340,10 @@ export default function ContactForm() {
                       id="message"
                       name="message"
                       rows={4}
+                      value={formData.message}
+                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border border-gray-300 rounded-md"
-                      aria-describedby="message-max"
-                      defaultValue={''}
+                      aria-describedby="messageMax"
                     />
                   </div>
                 </div>
