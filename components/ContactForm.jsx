@@ -1,24 +1,19 @@
-import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-  })
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm()
 
-  const handleSubmit = event => {
-    event.preventDefault()
-    console.log('Form Submitted', formData)
-  }
+  console.log('error data', errors)
 
-  const handleInputChange = event => {
-    const { name, value } = event.target
-    setFormData({ ...formData, [name]: value })
+  const onSubmit = data => {
+    console.log('Submitted data', data)
+    reset()
   }
 
   return (
@@ -224,7 +219,7 @@ export default function ContactForm() {
                 Send us a message
               </h3>
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
               >
                 <div>
@@ -237,10 +232,14 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      name="firstName"
+                      {...register('firstName', {
+                        required: 'First name is required.',
+                        maxLength: {
+                          value: 30,
+                          message: 'Max length of First Name is 30.',
+                        },
+                      })}
                       id="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
@@ -255,10 +254,18 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      name="lastName"
+                      {...register('lastName', {
+                        required: 'Last name is required.',
+                        minLength: {
+                          value: 2,
+                          message: 'Min length of Last Name is 2.',
+                        },
+                        maxLength: {
+                          value: 30,
+                          message: 'Max length of Last Name is 30.',
+                        },
+                      })}
                       id="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
@@ -273,10 +280,18 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       id="email"
-                      name="email"
+                      {...register('email', {
+                        required: 'Email is required.',
+                        minLength: {
+                          value: 6,
+                          message: 'Min length of Email is 6.',
+                        },
+                        maxLength: {
+                          value: 40,
+                          message: 'Max length of Email is 40.',
+                        },
+                      })}
                       type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
@@ -296,10 +311,17 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      name="phone"
+                      {...register('phone', {
+                        minLength: {
+                          value: 10,
+                          message: 'Min length of Phone is 10.',
+                        },
+                        maxLength: {
+                          value: 30,
+                          message: 'Max length of Phone is 30.',
+                        },
+                      })}
                       id="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                       aria-describedby="phoneOptional"
                     />
@@ -315,10 +337,18 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      name="subject"
+                      {...register('subject', {
+                        required: 'Subject is required.',
+                        minLength: {
+                          value: 2,
+                          message: 'Min length of Subject is 2.',
+                        },
+                        maxLength: {
+                          value: 50,
+                          message: 'Max length of Subject is 50.',
+                        },
+                      })}
                       id="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
                   </div>
@@ -338,10 +368,18 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <textarea
                       id="message"
-                      name="message"
+                      {...register('message', {
+                        required: 'Message is required.',
+                        minLength: {
+                          value: 2,
+                          message: 'Min length of Subject is 2.',
+                        },
+                        maxLength: {
+                          value: 500,
+                          message: 'Max length of Message is 500.',
+                        },
+                      })}
                       rows={4}
-                      value={formData.message}
-                      onChange={handleInputChange}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border border-gray-300 rounded-md"
                       aria-describedby="messageMax"
                     />

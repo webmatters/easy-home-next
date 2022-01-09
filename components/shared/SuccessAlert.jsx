@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from '@heroicons/react/solid'
 
-export default function BasicAlert({ message }) {
+export default function SuccessAlert({ message }) {
   return (
     <div className="rounded-md bg-green-50 p-4">
       <div className="flex">

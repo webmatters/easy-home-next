@@ -1,16 +1,58 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
-import BasicError from './shared/BasicError'
-import BasicAlert from './shared/BasicAlert'
+import ErrorAlert from './shared/ErrorAlert'
+import SuccessAlert from './shared/SuccessAlert'
 import heroPic from '../public/images/house-blue-hero.jpg'
 
-export default function Hero({ addEmail, error, alertMessage }) {
-  const submitEmail = async event => {
-    event.preventDefault()
-    const email = event.target.email.value
-    addEmail(email)
-    event.target.reset()
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+})
+
+export default function Hero() {
+  const [alert, setAlert] = useState()
+  const [apiErrors, setApiErrors] = useState([])
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
+
+  const onSubmit = async ({ email }) => {
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/notify-emails`, {
+        data: { email },
+      })
+
+      setAlert("We'll let you know when we launch.")
+      await setTimeout(() => setAlert(''), 5000)
+      reset()
+    } catch (err) {
+      if (
+        err?.response?.data?.error?.message === 'This attribute must be unique'
+      ) {
+        setApiErrors(arr => [
+          ...arr,
+          'This email is already set to be notified.',
+        ])
+        await setTimeout(() => setApiErrors([]), 5000)
+        reset()
+      } else {
+        console.error(err)
+        setApiErrors(arr => [...arr, err?.response?.data?.error?.message])
+        await setTimeout(() => setApiErrors([]), 5000)
+        reset()
+      }
+    }
   }
 
   return (
@@ -46,7 +88,7 @@ export default function Hero({ addEmail, error, alertMessage }) {
               </div>
               <form
                 className="mt-6 sm:mt-12 mb-3 sm:max-w-lg sm:w-full sm:flex"
-                onSubmit={submitEmail}
+                onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="min-w-0 flex-1">
                   <label htmlFor="email" className="sr-only">
@@ -54,13 +96,15 @@ export default function Hero({ addEmail, error, alertMessage }) {
                   </label>
                   <input
                     id="email"
-                    name="email"
+                    {...register('email')}
                     type="email"
-                    autoComplete="email"
                     className="block w-full border border-gray-300 rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     placeholder="Enter your email"
                     required
                   />
+                  <p className="text-sm text-red-500">
+                    {errors.email?.message}
+                  </p>
                 </div>
                 <div className="mt-4 sm:mt-0 sm:ml-3">
                   <button
@@ -71,8 +115,8 @@ export default function Hero({ addEmail, error, alertMessage }) {
                   </button>
                 </div>
               </form>
-              {error && <BasicError message={error} />}
-              {alertMessage && <BasicAlert message={alertMessage} />}
+              {apiErrors.length > 0 && <ErrorAlert errors={apiErrors} />}
+              {alert && <SuccessAlert message={alert} />}
               <p className="m-6 text-sm text-gray-500">
                 We care about the protection of your data. Read our{' '}
                 <Link href="/privacy">
