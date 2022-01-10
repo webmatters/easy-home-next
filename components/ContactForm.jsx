@@ -56,7 +56,14 @@ export default function ContactForm() {
       reset()
     } catch (err) {
       console.error(err)
-      setApiErrors(arr => [...arr, err?.response?.data?.error?.message])
+      if (err?.response?.data?.error?.message) {
+        setApiErrors(arr => [...arr, err?.response?.data?.error?.message])
+      } else {
+        setApiErrors(arr => [
+          ...arr,
+          'The server may be down. Please try again later.',
+        ])
+      }
       await setTimeout(() => setApiErrors([]), 5000)
     }
   }
@@ -404,7 +411,7 @@ export default function ContactForm() {
                   </button>
                 </div>
               </form>
-              <div className="p-3 absolute inset-x-0 bottom-0">
+              <div className="p-3 absolute inset-x-0 bottom-0 md:w-3/4">
                 {apiErrors.length > 0 && <ErrorAlert errors={apiErrors} />}
                 {alert && <SuccessAlert message={alert} />}
               </div>
