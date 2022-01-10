@@ -1,19 +1,55 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
 
+import ErrorAlert from './shared/ErrorAlert'
+import SuccessAlert from './shared/SuccessAlert'
+
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+const schema = yup.object().shape({
+  firstName: yup.string().max(30).required(),
+  lastName: yup.string().min(2).max(30).required(),
+  email: yup.string().email().required(),
+  phone: yup.string().matches(phoneRegExp, {
+    message: 'phone number is not valid',
+    excludeEmptyString: true,
+  }),
+  subject: yup.string().min(2).max(50).required(),
+  message: yup.string().min(2).max(500).required(),
+})
+
 export default function ContactForm() {
+  const [alert, setAlert] = useState()
+  const [apiErrors, setApiErrors] = useState([])
+
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm()
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
 
-  console.log('error data', errors)
+  const onSubmit = async data => {
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact-messages`, {
+        data,
+      })
 
-  const onSubmit = data => {
-    console.log('Submitted data', data)
-    reset()
+      setAlert("Thanks for your message! We'll get back to you ASAP.")
+      await setTimeout(() => setAlert(''), 5000)
+      reset()
+    } catch (err) {
+      console.error(err)
+      setApiErrors(arr => [...arr, err?.response?.data?.error?.message])
+      await setTimeout(() => setApiErrors([]), 5000)
+    }
   }
 
   return (
@@ -214,7 +250,7 @@ export default function ContactForm() {
             </div>
 
             {/* Contact form */}
-            <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
+            <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12 relative">
               <h3 className="text-lg font-medium text-gray-900">
                 Send us a message
               </h3>
@@ -232,16 +268,13 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      {...register('firstName', {
-                        required: 'First name is required.',
-                        maxLength: {
-                          value: 30,
-                          message: 'Max length of First Name is 30.',
-                        },
-                      })}
+                      {...register('firstName')}
                       id="firstName"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
+                    <p className="text-sm text-red-500">
+                      {errors.firstName?.message}
+                    </p>
                   </div>
                 </div>
                 <div>
@@ -254,20 +287,13 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      {...register('lastName', {
-                        required: 'Last name is required.',
-                        minLength: {
-                          value: 2,
-                          message: 'Min length of Last Name is 2.',
-                        },
-                        maxLength: {
-                          value: 30,
-                          message: 'Max length of Last Name is 30.',
-                        },
-                      })}
+                      {...register('lastName')}
                       id="lastName"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
+                    <p className="text-sm text-red-500">
+                      {errors.lastName?.message}
+                    </p>
                   </div>
                 </div>
                 <div>
@@ -280,20 +306,13 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       id="email"
-                      {...register('email', {
-                        required: 'Email is required.',
-                        minLength: {
-                          value: 6,
-                          message: 'Min length of Email is 6.',
-                        },
-                        maxLength: {
-                          value: 40,
-                          message: 'Max length of Email is 40.',
-                        },
-                      })}
+                      {...register('email')}
                       type="email"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
+                    <p className="text-sm text-red-500">
+                      {errors.email?.message}
+                    </p>
                   </div>
                 </div>
                 <div>
@@ -311,20 +330,14 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      {...register('phone', {
-                        minLength: {
-                          value: 10,
-                          message: 'Min length of Phone is 10.',
-                        },
-                        maxLength: {
-                          value: 30,
-                          message: 'Max length of Phone is 30.',
-                        },
-                      })}
+                      {...register('phone')}
                       id="phone"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                       aria-describedby="phoneOptional"
                     />
+                    <p className="text-sm text-red-500">
+                      {errors.phone?.message}
+                    </p>
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -337,20 +350,13 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <input
                       type="text"
-                      {...register('subject', {
-                        required: 'Subject is required.',
-                        minLength: {
-                          value: 2,
-                          message: 'Min length of Subject is 2.',
-                        },
-                        maxLength: {
-                          value: 50,
-                          message: 'Max length of Subject is 50.',
-                        },
-                      })}
+                      {...register('subject')}
                       id="subject"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
+                    <p className="text-sm text-red-500">
+                      {errors.subject?.message}
+                    </p>
                   </div>
                 </div>
                 <div className="sm:col-span-2">
@@ -368,21 +374,14 @@ export default function ContactForm() {
                   <div className="mt-1">
                     <textarea
                       id="message"
-                      {...register('message', {
-                        required: 'Message is required.',
-                        minLength: {
-                          value: 2,
-                          message: 'Min length of Subject is 2.',
-                        },
-                        maxLength: {
-                          value: 500,
-                          message: 'Max length of Message is 500.',
-                        },
-                      })}
+                      {...register('message')}
                       rows={4}
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border border-gray-300 rounded-md"
                       aria-describedby="messageMax"
                     />
+                    <p className="text-sm text-red-500">
+                      {errors.message?.message}
+                    </p>
                   </div>
                 </div>
                 <div className="sm:col-span-2 sm:flex sm:justify-end">
@@ -394,6 +393,10 @@ export default function ContactForm() {
                   </button>
                 </div>
               </form>
+              <div className="p-3 absolute inset-x-0 bottom-0">
+                {apiErrors.length > 0 && <ErrorAlert errors={apiErrors} />}
+                {alert && <SuccessAlert message={alert} />}
+              </div>
             </div>
           </div>
         </div>
