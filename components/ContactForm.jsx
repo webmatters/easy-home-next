@@ -7,18 +7,14 @@ import { MailIcon, PhoneIcon } from '@heroicons/react/outline'
 
 import ErrorAlert from './shared/ErrorAlert'
 import SuccessAlert from './shared/SuccessAlert'
+import { formatPhoneNumber } from 'utils'
 
-const phoneRegExp =
-  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+const phoneRegExp = /^((| |)\d{3}()| |)(-| )\d{3}-\d{4}$/
 
 const schema = yup.object().shape({
   firstName: yup.string().max(30).required(),
   lastName: yup.string().min(2).max(30).required(),
   email: yup.string().email().required(),
-  phone: yup.string().matches(phoneRegExp, {
-    message: 'phone number is not valid',
-    excludeEmptyString: true,
-  }),
   subject: yup.string().min(2).max(50).required(),
   message: yup.string().min(2).max(500).required(),
 })
@@ -26,6 +22,7 @@ const schema = yup.object().shape({
 export default function ContactForm() {
   const [alert, setAlert] = useState()
   const [apiErrors, setApiErrors] = useState([])
+  const [phoneNumber, setPhoneNumber] = useState('')
 
   const {
     register,
@@ -36,6 +33,11 @@ export default function ContactForm() {
     resolver: yupResolver(schema),
   })
 
+  const handlePhone = e => {
+    const formattedPhoneNumber = formatPhoneNumber(e.target.value)
+    setPhoneNumber(formattedPhoneNumber)
+  }
+
   const onSubmit = async data => {
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact-messages`, {
@@ -43,7 +45,11 @@ export default function ContactForm() {
       })
 
       setAlert("Thanks for your message! We'll get back to you ASAP.")
-      await setTimeout(() => setAlert(''), 5000)
+      setPhoneNumber('')
+
+      await setTimeout(() => {
+        setAlert('')
+      }, 5000)
       reset()
     } catch (err) {
       console.error(err)
@@ -334,6 +340,8 @@ export default function ContactForm() {
                       id="phone"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                       aria-describedby="phoneOptional"
+                      onChange={e => handlePhone(e)}
+                      value={phoneNumber}
                     />
                     <p className="text-sm text-red-500">
                       {errors.phone?.message}
