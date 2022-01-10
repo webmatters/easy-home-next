@@ -9,8 +9,6 @@ import ErrorAlert from './shared/ErrorAlert'
 import SuccessAlert from './shared/SuccessAlert'
 import { formatPhoneNumber } from 'utils'
 
-const phoneRegExp = /^((| |)\d{3}()| |)(-| )\d{3}-\d{4}$/
-
 const schema = yup.object().shape({
   firstName: yup.string().max(30).required(),
   lastName: yup.string().min(2).max(30).required(),
@@ -39,6 +37,11 @@ export default function ContactForm() {
   }
 
   const onSubmit = async data => {
+    Object.keys(data).forEach(key => {
+      data[key] = data[key].trim()
+      return data
+    })
+
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact-messages`, {
         data,
@@ -278,7 +281,7 @@ export default function ContactForm() {
                       id="firstName"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-red-500 capitalize">
                       {errors.firstName?.message}
                     </p>
                   </div>
@@ -297,7 +300,7 @@ export default function ContactForm() {
                       id="lastName"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-red-500 capitalize">
                       {errors.lastName?.message}
                     </p>
                   </div>
@@ -316,7 +319,7 @@ export default function ContactForm() {
                       type="email"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-red-500 capitalize">
                       {errors.email?.message}
                     </p>
                   </div>
@@ -343,7 +346,7 @@ export default function ContactForm() {
                       onChange={e => handlePhone(e)}
                       value={phoneNumber}
                     />
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-red-500 capitalize">
                       {errors.phone?.message}
                     </p>
                   </div>
@@ -362,7 +365,7 @@ export default function ContactForm() {
                       id="subject"
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                     />
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-red-500 capitalize">
                       {errors.subject?.message}
                     </p>
                   </div>
@@ -387,7 +390,7 @@ export default function ContactForm() {
                       className="py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-blue-500 focus:border-blue-500 border border-gray-300 rounded-md"
                       aria-describedby="messageMax"
                     />
-                    <p className="text-sm text-red-500">
+                    <p className="text-sm text-red-500 capitalize">
                       {errors.message?.message}
                     </p>
                   </div>
