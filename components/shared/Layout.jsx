@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import NavBar from './NavBar'
+import Navbar from './Navbar'
 import Footer from './Footer'
 
 export default function Layout({ title, keywords, description, children }) {
@@ -10,7 +10,7 @@ export default function Layout({ title, keywords, description, children }) {
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
       </Head>
-      {/* <NavBar /> */}
+      <Navbar />
       <main>{children}</main>
       <Footer />
     </div>
