@@ -342,7 +342,7 @@ export default function Navbar() {
                 </a>
                 {resources.map(resource => (
                   <a
-                    key={resources.name}
+                    key={resource.name}
                     href={resource.href}
                     className="text-base font-medium text-gray-900 hover:text-gray-700"
                   >
